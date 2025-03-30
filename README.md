@@ -33,12 +33,6 @@ ASOS Analysis is available via both **pip** and **conda**.
 ```bash
 pip install asos_analysis
 ```
-
-### Using `conda`:
-```bash
-conda install -c sauravshuvo asos_analysis
-```
-
 ---
 
 ## Usage
