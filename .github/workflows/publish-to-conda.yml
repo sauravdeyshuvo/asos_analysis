@@ -1,0 +1,32 @@
+name: Publish Conda Package
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow when code is pushed to the main branch
+
+jobs:
+  publish:
+    name: Publish Conda Package
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        environment-file: environment.yml
+
+    - name: Install Conda Build
+      run: conda install -y conda-build anaconda-client
+
+    - name: Build Conda Package
+      run: conda build .
+
+    - name: Upload to Anaconda Cloud
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+      run: anaconda upload --user sauravshuvo ~/miniconda3/conda-bld/linux-64/*.tar.bz2
